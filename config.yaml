@@ -1,0 +1,15 @@
+SOURCES:
+  ACM:
+    directory: /mnt/c/Users/GUSTAVO/Desktop/MBA_IMPACTA/Python/bibtex/arquivos_bibtex/
+    namestring: acm
+
+  SCIENCEDIRECT:
+    directory: /mnt/c/Users/GUSTAVO/Desktop/MBA_IMPACTA/Python/bibtex/arquivos_bibtex/
+    namestring: ScienceDirect
+
+  IEEE:
+    directory: /mnt/c/Users/GUSTAVO/Desktop/MBA_IMPACTA/Python/bibtex/arquivos_bibtex/
+    namestring: ieee
+
+DADOS_EXPORT:
+  formato_export: yaml
