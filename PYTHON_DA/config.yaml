@@ -12,5 +12,5 @@ SOURCES:
     namestring: ieee
 
 DADOS_EXPORT:
-  nome_do_arquivo: bib_to_yaml
-  formato_export: yaml
+  nome_do_arquivo: bib_convertido
+  formato_export: csv

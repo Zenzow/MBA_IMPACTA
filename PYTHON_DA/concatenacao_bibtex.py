@@ -2,7 +2,8 @@ import yaml
 import os
 import glob
 from bib2yaml import bib2yaml
-
+from bib2json import bib2json
+from bib2csv import bib2csv
 
 def read_config():
     arquivos = {}
@@ -29,3 +30,7 @@ if __name__ == "__main__":
     files_to_process = list_bib_files(bibs)
     if formato_export.get("formato_export") == "yaml":
         bib2yaml(files_to_process,formato_export.get("nome_do_arquivo"))
+    elif formato_export.get("formato_export") == "json":
+        bib2json(files_to_process,formato_export.get("nome_do_arquivo"))
+    elif formato_export.get("formato_export") == "csv":
+        bib2csv(files_to_process,formato_export.get("nome_do_arquivo"))
