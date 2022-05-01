@@ -1,6 +1,6 @@
 import bibtexparser
 import json
-import re
+import yaml
 from models.bibtex_model import BibtexModel
 
 def bib2json(dict_of_files, nome_do_arquivo):
@@ -18,3 +18,10 @@ def bib2json(dict_of_files, nome_do_arquivo):
 
     with open(nome_do_arquivo + '.json', 'w') as outfile:
         outfile.write(json_obj)
+
+    
+    yaml_data = yaml.safe_load(json_obj)
+    converted_yaml_data = yaml.dump(yaml_data)
+    print(converted_yaml_data)
+    with open(nome_do_arquivo + '.yaml', 'w') as y:
+        y.write(converted_yaml_data)

@@ -1,9 +1,7 @@
 import yaml
 import os
 import glob
-from bib2yaml import bib2yaml
-from bib2json import bib2json
-from bib2csv import bib2csv
+from bib_converter import bib_reader_writer
 
 def read_config():
     arquivos = {}
@@ -28,9 +26,9 @@ def list_bib_files(dict_bibs):
 if __name__ == "__main__":
     bibs, formato_export = read_config()
     files_to_process = list_bib_files(bibs)
-    if formato_export.get("formato_export") == "yaml":
-        bib2yaml(files_to_process,formato_export.get("nome_do_arquivo"))
-    elif formato_export.get("formato_export") == "json":
-        bib2json(files_to_process,formato_export.get("nome_do_arquivo"))
-    elif formato_export.get("formato_export") == "csv":
-        bib2csv(files_to_process,formato_export.get("nome_do_arquivo"))
+    nm_arq = formato_export.get("nome_do_arquivo")
+    fmt = formato_export.get("formato_export")
+    if fmt not in ["yaml", "json", "csv"]:
+        print("Formato " + fmt + " não suportado!")
+        exit()
+    bib_reader_writer(files_to_process, nm_arq, fmt)
