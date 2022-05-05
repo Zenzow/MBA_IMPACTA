@@ -1,0 +1,19 @@
+file_origen:
+  - folder: 'project_files/imports/bibtex_files'
+    name: bibtex_files_folder
+
+file_destination:
+  - folder: 'project_files/exports/'
+    name: exportation_files_folder
+
+
+# Chose one exportation type:
+  # csv
+  # json
+  # yaml
+
+exportation_type:
+  - type: 'yaml'
+  
+    
+ 
