@@ -6,6 +6,7 @@ from models.bibtex_model import BibtexModel
 
 def bib_reader_writer(dict_of_files, nome_do_arquivo, formato_do_arquivo):
     list_output = []
+    dict_list = []
     for bib_files, list_of_files in dict_of_files.items():
         for file in list_of_files:
             with open(file) as bibtex_file:
@@ -14,12 +15,14 @@ def bib_reader_writer(dict_of_files, nome_do_arquivo, formato_do_arquivo):
             for valor in bib_database.entries:
                 list_output.append(BibtexModel(valor.get('author', 'empty'), valor.get('title', 'empty'), valor.get(
                     'keywords', 'empty'), valor.get('year', 'empty'), valor.get('ENTRYTYPE', 'empty'), valor.get('doi', 'empty')))
+    for valor in list_output:
+        dict_list.append({'author':valor.author,'title':valor.title,'keywords':valor.keywords,'year':valor.year,'type_publication':valor.type_publication,'doi':valor.doi})
     json_obj = json.dumps([o.dump_json() for o in list_output], indent=3)
-
+    print(dict_list)
     if formato_do_arquivo == "json":
         bib2json(json_obj, nome_do_arquivo)
     elif formato_do_arquivo == "yaml":
-        bib2yaml(json_obj, nome_do_arquivo)
+        bib2yaml(dict_list, nome_do_arquivo)
     elif formato_do_arquivo == "csv":
         bib2csv(list_output, nome_do_arquivo)
 
@@ -27,11 +30,10 @@ def bib2json(json_obj,nome_do_arquivo):
     with open(nome_do_arquivo + '.json', 'w') as outfile:
         outfile.write(json_obj)
 
-def bib2yaml(json_obj, nome_do_arquivo):
-    yaml_data = yaml.safe_load(json_obj)
-    converted_yaml_data = yaml.dump(yaml_data)
+def bib2yaml(dict_list, nome_do_arquivo):
+    yaml_data = yaml.dump(dict_list, indent=3)
     with open(nome_do_arquivo + '.yaml', 'w') as y:
-        y.write(converted_yaml_data)
+        y.write(yaml_data)
 
 def bib2csv(list_output, nome_do_arquivo):
     with open(nome_do_arquivo + ".csv", 'w', newline='') as f:
