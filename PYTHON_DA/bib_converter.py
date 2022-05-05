@@ -1,7 +1,8 @@
-import bibtexparser
 import json
-import yaml
+import sys
 import csv
+import yaml
+import bibtexparser
 from models.bibtex_model import BibtexModel
 
 def bib_reader_writer(dict_of_files, nome_do_arquivo, formato_do_arquivo):
@@ -18,7 +19,6 @@ def bib_reader_writer(dict_of_files, nome_do_arquivo, formato_do_arquivo):
     for valor in list_output:
         dict_list.append({'author':valor.author,'title':valor.title,'keywords':valor.keywords,'year':valor.year,'type_publication':valor.type_publication,'doi':valor.doi})
     json_obj = json.dumps([o.dump_json() for o in list_output], indent=3)
-    print(dict_list)
     if formato_do_arquivo == "json":
         bib2json(json_obj, nome_do_arquivo)
     elif formato_do_arquivo == "yaml":
@@ -31,6 +31,7 @@ def bib2json(json_obj,nome_do_arquivo):
         outfile.write(json_obj)
 
 def bib2yaml(dict_list, nome_do_arquivo):
+    print(sys.argv[1])
     yaml_data = yaml.dump(dict_list, indent=3)
     with open(nome_do_arquivo + '.yaml', 'w') as y:
         y.write(yaml_data)
