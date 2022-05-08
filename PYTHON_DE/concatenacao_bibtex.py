@@ -2,7 +2,8 @@ import sys
 import glob
 from datetime import datetime
 import yaml
-from bib_converter import bib_reader_writer
+from bib_converter import bib_reader, bib_writer
+from treat_df import treat_dataframe, df_to_csv, df_to_json, df_to_xml, df_to_yaml
 
 
 def read_config():
@@ -12,7 +13,8 @@ def read_config():
         config = yaml.load(file, Loader=yaml.FullLoader)
     arquivos = config.get('SOURCES')
     export = config.get('DADOS_EXPORT')
-    return arquivos, export
+    filter = config.get('FILTERS')
+    return arquivos, export, filter
 
 
 def list_bib_files(dict_bibs,anomesdia):
@@ -24,8 +26,14 @@ def list_bib_files(dict_bibs,anomesdia):
         dict_bibtex_bibfiles[bib_files] = list_of_bib_files
     return dict_bibtex_bibfiles
 
-
-if __name__ == "__main__":
+def valida_configs(fmt, filter):
+    if fmt not in ["yaml", "json", "csv", "xml", "all"]:
+        print("Formato " + fmt + " não suportado!")
+        exit()
+    for col in filter:
+        if col not in ['Title', 'keywords', 'abstract', 'year', 'type_publication', 'doi', 'JIR', 'SJR']:
+            print("Coluna " + col + " inválida para filtragem!")
+            exit()
     if len(sys.argv) > 1:
         anomesdia = sys.argv[1]
         try:
@@ -37,11 +45,29 @@ if __name__ == "__main__":
         #print(anomesdia)
     else:
         anomesdia = ''
-    bibs, formato_export = read_config()
-    files_to_process = list_bib_files(bibs,anomesdia)
+
+    return anomesdia
+
+
+if __name__ == "__main__":
+    bibs, formato_export, filter = read_config()
     nm_arq = formato_export.get("nome_do_arquivo")
     fmt = formato_export.get("formato_export")
-    if fmt not in ["yaml", "json", "csv"]:
-        print("Formato " + fmt + " não suportado!")
-        exit()
-    bib_reader_writer(files_to_process, nm_arq, fmt)
+    anomesdia = valida_configs(fmt, filter['cols_to_show'])
+    files_to_process = list_bib_files(bibs,anomesdia)
+    json_obj, dict_yaml, list_csv = bib_reader(files_to_process)
+    merged_df = treat_dataframe(dict_yaml, filter)
+    if fmt == 'all':
+        df_to_yaml(merged_df, nm_arq)
+        df_to_json(merged_df, nm_arq)
+        df_to_csv(merged_df, nm_arq)
+        df_to_xml(merged_df, nm_arq)
+    elif fmt == 'json':
+        df_to_json(merged_df, nm_arq)
+    elif fmt == 'csv':
+        df_to_csv(merged_df, nm_arq)
+    elif fmt == 'yaml':
+        df_to_csv(merged_df, nm_arq)
+    elif fmt == 'xml':
+        df_to_xml(merged_df, nm_arq)
+    bib_writer(nm_arq, fmt, json_obj, dict_yaml, list_csv)

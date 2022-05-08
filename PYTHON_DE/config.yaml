@@ -12,5 +12,10 @@ SOURCES:
     namestring: ieee
 
 DADOS_EXPORT:
-  nome_do_arquivo: bib_convertido
-  formato_export: csv
+  # yaml, csv, json, xml, all
+  nome_do_arquivo: arquivos_exportados/bib_convertido
+  formato_export: all
+
+FILTERS:
+  # padrão : Title, keywords, abstract, year, type_publication, doi, JIR, SJR
+  cols_to_show: [Title, keywords, abstract, year, type_publication, doi, JIR, SJR]
