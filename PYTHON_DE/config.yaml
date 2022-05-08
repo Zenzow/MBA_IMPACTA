@@ -17,5 +17,38 @@ DADOS_EXPORT:
   formato_export: all
 
 FILTERS:
-  # padrão : Title, keywords, abstract, year, type_publication, doi, JIR, SJR
-  cols_to_show: [Title, keywords, abstract, year, type_publication, doi, JIR, SJR]
+  # se quer filtros ou não - yes or no
+  active: 'yes'
+  # padrão : Title, keywords, abstract, year, type_publication, doi, JIR, SJR, journal
+  cols_to_show: [Title, author, keywords, journal, abstract, year, type_publication, doi, JIR, SJR]
+  # text - o que você quer buscar, 1 palavra simples (big) ou composta (big data) por vez (obrigatório)
+  # cond - como vc quer buscar, and ou or (obrigatório) 
+  # tipo_comp - tipo de comparação, pode ser >, <, >=, <= ou == 
+  values_to_filter:
+    Title:
+      text: data
+      cond: and
+    keywords: 
+      text: 'big'
+      cond: and
+    abstract:
+      text:
+      cond: 
+    year:
+      text: 2020
+      tipo_comp: '=='
+      cond: and
+    type_publication:
+      text:
+      cond:
+    doi: 
+      text:
+      cond:
+    JIR: 
+      text:
+      tipo_comp:
+      cond:
+    SJR:
+      text:
+      tipo_comp:
+      cond:

@@ -8,6 +8,8 @@ def read_impact():
     df_jcr['Title'] = df_jcr['Title'].str.upper()
     df_scim = pd.read_csv("jcr_scimago/scimagojr_2020.csv", sep = ";", usecols = ["Title", "SJR"],
                         low_memory = False)
+    df_scim['SJR'] = df_scim['SJR'].str.replace(',', '.')
     df_scim['Title'] = df_scim['Title'].str.upper()
     merged_df = pd.merge(df_scim, df_jcr, how = 'left', on = 'Title')
+    merged_df.rename(columns = {"Title": "journal"}, inplace = True)
     return merged_df

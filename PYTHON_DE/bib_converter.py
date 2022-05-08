@@ -13,10 +13,22 @@ def bib_reader(dict_of_files):
                 bib_database = bibtexparser.load(bibtex_file)
 
             for valor in bib_database.entries:
+                if 'journal' in valor:
+                    journal = valor.get('journal')
+                elif 'booktitle' in valor:
+                    journal = valor.get('booktitle')
                 list_output.append(BibtexModel(valor.get('author', 'empty'), valor.get('title', 'empty'), valor.get(
-                    'keywords', 'empty'), valor.get('year', 'empty'), valor.get('ENTRYTYPE', 'empty'), valor.get('doi', 'empty'), valor.get('abstract', 'empty')))
+                    'keywords', 'empty'), valor.get('year', 'empty'), valor.get('ENTRYTYPE', 'empty'), 
+                    valor.get('doi', 'empty'), valor.get('abstract', 'empty'), journal))
     for valor in list_output:
-        dict_list.append({'author':valor.author,'title':valor.title,'keywords':valor.keywords,'year':valor.year,'type_publication':valor.type_publication,'doi':valor.doi,'abstract':valor.abstract})
+        dict_list.append({'author':valor.author,
+                          'title':valor.title,
+                          'keywords':valor.keywords,
+                          'year':valor.year,
+                          'type_publication':valor.type_publication,
+                          'doi':valor.doi,
+                          'abstract':valor.abstract,
+                          'journal':valor.journal})
     json_obj = json.dumps([o.dump_json() for o in list_output], indent=3)
     return json_obj, dict_list, list_output
 
