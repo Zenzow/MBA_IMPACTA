@@ -62,7 +62,6 @@ def creating_filter(vl_to_filter):
         #print(chave, value)
         if value['cond'] is not None and value['text'] is not None:
             filtros[chave] = value
-    print(filtros)
     for col, valor in filtros.items():
         if col != list(filtros.keys())[-1]:
             conector = valor['cond']
@@ -71,6 +70,7 @@ def creating_filter(vl_to_filter):
         if col in ['year', 'JIR', 'SJR']:
             query_string = query_string + col + ' ' + valor['tipo_comp'] + ' ' + str(valor['text']) + ' ' + conector + ' ' 
         conector = ''
+    print(query_string)
     return(query_string)
     
 

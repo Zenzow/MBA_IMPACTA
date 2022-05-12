@@ -26,18 +26,18 @@ FILTERS:
   # tipo_comp - tipo de comparação, pode ser >, <, >=, <= ou == 
   values_to_filter:
     Title:
-      text: data
-      cond: and
+      text:
+      cond:
     keywords: 
-      text: 'big'
-      cond: and
+      text:
+      cond:
     abstract:
       text:
       cond: 
     year:
-      text: 2020
-      tipo_comp: '=='
-      cond: and
+      text:
+      tipo_comp:
+      cond:
     type_publication:
       text:
       cond:
@@ -45,10 +45,10 @@ FILTERS:
       text:
       cond:
     JIR: 
-      text:
-      tipo_comp:
-      cond:
+      text: 2
+      tipo_comp: '>='
+      cond: and
     SJR:
-      text:
-      tipo_comp:
-      cond:
+      text: 2
+      tipo_comp: '>='
+      cond: and

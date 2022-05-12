@@ -1,0 +1,46 @@
+file_origen:
+  - folder: 'project_files/imports/bibtex_files'
+    name: bibtex_files_folder
+
+file_ranking_origen:
+  - folder: 'project_files/imports/ranking_files'
+    name: 'ranking_files'
+
+file_destination:
+  - folder: 'project_files/exports/'
+    name: exportation_files_folder
+
+
+# Chose one exportation type:
+  # csv
+  # json
+  # yaml
+  # xml
+
+supported_exportation_types:
+  - supported_types: ['csv','json','yaml','xml']
+    
+exportation_type:
+  - type: 'json'
+
+supported_type_publication: 
+  - supported_types: ['inproceedings','article','inbook','techreport','book','proceedings','incollection']
+
+supported_type_equality: 
+  - supported_types: ['<=','<','==','>','>=','!=']
+
+filter_options:
+  - title: ''               # text value, '' for empty
+    keywords: ['']                           # text values, ex: ['BIG DATA', 'ANALISYS'], [''] for empty
+    abstract: ''                             # text value, '' for empty
+    year_equality: '>'                       # equality value in ['<=','<','==','>','>=','!=']
+    year: '2020'                             # int value, ex: 2019, '' for empty
+    type_publication: ''              # text value in ['inproceedings','article','inbook','techreport','book','proceedings','incollection'] or '' for none
+    doi: ''                                  # text value, '' for empty
+    jcr_value_equality: '>='                # equality value in ['<=','<','==','>','>=','!=']
+    jcr_value: '4'                        # decimal value, ex: 343.12, '' for empty
+    scimago_value_equality: '<'            # equality value in ['<=','<','==','>','>=','!=']
+    scimago_value: '2'                    # decimal value, ex: 343.12, '' for empty
+  
+    
+ 
