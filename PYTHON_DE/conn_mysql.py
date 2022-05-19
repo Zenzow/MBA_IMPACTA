@@ -21,20 +21,3 @@ def python_sql(df):
     for i in result:
         print(i)
     con.close()
-
-if __name__ == '__main__':
-    python_sql('a')
-    cursor.execute("""create table if not exists tb_zenzo_python_de (
-                    author varchar(100) null,
-                    title varchar(200) null,
-                    keywords varchar(300) null,
-                    year smallint null,
-                    type_publication varchar(50) null,
-                    doi varchar(30) null,
-                    abstract varchar(1000) null,
-                    journal varchar(50) null
-                    );""")
-    comando = """sudo service mysql status
-                 sudo service mysql start
-                 sudo service mysql status
-                 sudo mysql -p"""
