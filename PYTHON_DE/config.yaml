@@ -18,7 +18,7 @@ DADOS_EXPORT:
 
 FILTERS:
   # se quer filtros ou não - yes or no
-  active: 'yes'
+  active: 'no'
   # padrão : Title, keywords, abstract, year, type_publication, doi, JIR, SJR, journal
   cols_to_show: [Title, author, keywords, journal, abstract, year, type_publication, doi, JIR, SJR]
   # text - o que você quer buscar, 1 palavra simples (big) ou composta (big data) por vez (obrigatório)
@@ -35,9 +35,9 @@ FILTERS:
       text:
       cond: 
     year:
-      text:
-      tipo_comp:
-      cond:
+      text: 2020
+      tipo_comp: '=='
+      cond: and
     type_publication:
       text:
       cond:
@@ -52,3 +52,7 @@ FILTERS:
       text: 2
       tipo_comp: '>='
       cond: and
+
+SEARCH:
+  api_or_bibtex: api
+  string_to_search: data quality 

@@ -7,6 +7,7 @@ from read_impact import read_impact
 
 def treat_dataframe(dict_list, cols, opt_filter, query_df):
     df_bibtex = pd.DataFrame(dict_list)
+    #print(df_bibtex)
     df_bibtex.rename(columns = {"title": "Title"}, inplace = True)
     df_bibtex['journal'] = df_bibtex['journal'].str.upper()
     df_impacto = read_impact()
@@ -20,6 +21,7 @@ def treat_dataframe(dict_list, cols, opt_filter, query_df):
     if opt_filter == 'yes':
         new_df.query(query_df, engine = 'python', inplace = True)
         new_df = merged_df.filter(items = cols['cols_to_show'])
+    print(new_df)
     return new_df
 
 def to_xml(row):

@@ -5,6 +5,8 @@ from datetime import datetime
 import yaml
 from bib_converter import bib_reader, bib_writer
 from treat_df import treat_dataframe, df_to_csv, df_to_json, df_to_xml, df_to_yaml
+from ieee_api import connect_api, api_to_model
+from conn_mysql import python_sql
 
 
 def read_config():
@@ -15,7 +17,8 @@ def read_config():
     arquivos = config.get('SOURCES')
     export = config.get('DADOS_EXPORT')
     filter = config.get('FILTERS')
-    return arquivos, export, filter
+    search_string = config.get('SEARCH')
+    return arquivos, export, filter, search_string
 
 
 def list_bib_files(dict_bibs,anomesdia):
@@ -70,31 +73,36 @@ def creating_filter(vl_to_filter):
         if col in ['year', 'JIR', 'SJR']:
             query_string = query_string + col + ' ' + valor['tipo_comp'] + ' ' + str(valor['text']) + ' ' + conector + ' ' 
         conector = ''
-    print(query_string)
     return(query_string)
     
 
 if __name__ == "__main__":
-    bibs, formato_export, filter = read_config()
+    bibs, formato_export, filter, search_string = read_config()
     vl_filter = filter['values_to_filter']
     query_string = creating_filter(vl_filter)
     nm_arq = formato_export.get("nome_do_arquivo")
     fmt = formato_export.get("formato_export")
     anomesdia, opt_filter = valida_configs(fmt, filter['cols_to_show'], filter['active'])
-    files_to_process = list_bib_files(bibs,anomesdia)
-    json_obj, dict_yaml, list_csv = bib_reader(files_to_process)
-    merged_df = treat_dataframe(dict_yaml, filter, opt_filter, query_string)
-    if fmt == 'all':
-        df_to_yaml(merged_df, nm_arq)
-        df_to_json(merged_df, nm_arq)
-        df_to_csv(merged_df, nm_arq)
-        df_to_xml(merged_df, nm_arq)
-    elif fmt == 'json':
-        df_to_json(merged_df, nm_arq)
-    elif fmt == 'csv':
-        df_to_csv(merged_df, nm_arq)
-    elif fmt == 'yaml':
-        df_to_csv(merged_df, nm_arq)
-    elif fmt == 'xml':
-        df_to_xml(merged_df, nm_arq)
-    bib_writer(nm_arq, fmt, json_obj, dict_yaml, list_csv)
+    if search_string['api_or_bibtex'] == 'api':
+        articles = connect_api(search_string['string_to_search'])
+        dict_list = api_to_model(articles)
+    elif search_string['api_or_bibtex'] == 'bibtex':
+        files_to_process = list_bib_files(bibs,anomesdia)
+        json_obj, dict_list, list_csv = bib_reader(files_to_process)
+    merged_df = treat_dataframe(dict_list, filter, opt_filter, query_string)
+    python_sql(merged_df)
+    print(merged_df)
+    #if fmt == 'all':
+    #    df_to_yaml(merged_df, nm_arq)
+    #    df_to_json(merged_df, nm_arq)
+    #    df_to_csv(merged_df, nm_arq)
+    #    df_to_xml(merged_df, nm_arq)
+    #elif fmt == 'json':
+    #    df_to_json(merged_df, nm_arq)
+    #elif fmt == 'csv':
+    #    df_to_csv(merged_df, nm_arq)
+    #elif fmt == 'yaml':
+    #    df_to_csv(merged_df, nm_arq)
+    #elif fmt == 'xml':
+    #    df_to_xml(merged_df, nm_arq)
+    #bib_writer(nm_arq, fmt, json_obj, dict_list, list_csv)
