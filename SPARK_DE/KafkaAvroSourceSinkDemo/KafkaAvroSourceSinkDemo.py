@@ -5,6 +5,8 @@ from pyspark.sql.types import ArrayType, StructType, StructField, StringType, Lo
 
 from lib.logger import Log4j
 
+####ainda não funciona####
+
 if __name__ == "__main__":
     spark = SparkSession \
         .builder \
