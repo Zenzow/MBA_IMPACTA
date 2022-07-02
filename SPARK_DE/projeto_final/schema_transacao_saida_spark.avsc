@@ -1,0 +1,19 @@
+{"namespace": "transacao.avro",
+ "type": "record",
+ "name": "User",
+ "fields": [
+     {"name": "cd_cli", "type": "registers"},
+     {"name": "agencia",  "type": ["int", "null"]},
+     {"name": "valor_operacao", "type": ["float", "null"]},
+     {"name": "tipo_operacao", "type": "string"},
+     {"name": "data_hora", "type": "string"},
+     {"name": "saldo_conta", "type": "float"},
+     {"name": "nome_cliente", "type": "int"},
+     {"name": "idade",  "type": ["int", "null"]},
+     {"name": "gerente", "type": ["float", "null"]},
+     {"name": "conta_corrente", "type": "string"},
+     {"name": "tipo_conta", "type": "string"},
+     {"name": "score", "type": "float"},
+     {"name": "regra", "type": "string"}
+ ]
+}

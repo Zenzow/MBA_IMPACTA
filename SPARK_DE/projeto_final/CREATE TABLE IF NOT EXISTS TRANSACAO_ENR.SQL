@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS TRANSACAO_ENR (cd_cli int, agencia int,valor_operacao int,tipo_operacao text,data_hora datetime,saldo_conta float,cod_cliente int,nome text,idade smallint,gerente text,conta int,tip_conta text,score smallint,decision text)

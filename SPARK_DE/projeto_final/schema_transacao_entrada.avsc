@@ -1,0 +1,12 @@
+{"namespace": "transacao.avro",
+ "type": "record",
+ "name": "User",
+ "fields": [
+     {"name": "cd_cli", "type": "int"},
+     {"name": "agencia",  "type": ["int", "null"]},
+     {"name": "valor_operacao", "type": ["float", "null"]},
+     {"name": "tipo_operacao", "type": "string"},
+     {"name": "data_hora", "type": "string"},
+     {"name": "saldo_conta", "type": "float"}
+ ]
+}
